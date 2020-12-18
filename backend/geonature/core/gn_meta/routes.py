@@ -19,6 +19,7 @@ from flask import (
     copy_current_request_context,
     Response,
 )
+from werkzeug.exceptions import NotFound
 from sqlalchemy.sql import text, exists, select, update
 from sqlalchemy.sql.functions import func
 
@@ -773,6 +774,8 @@ def get_export_pdf_acquisition_frameworks(id_acquisition_framework, info_role):
 
     # Recuperation des données
     af = DB.session.query(TAcquisitionFrameworkDetails).get(id_acquisition_framework)
+    if not af:
+        raise NotFound
     acquisition_framework = af.as_dict(True)
 
     q = DB.session.query(TDatasets).distinct()
