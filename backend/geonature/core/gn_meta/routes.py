@@ -19,7 +19,7 @@ from flask import (
     copy_current_request_context,
     Response,
 )
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import NotFound, Forbidden
 from sqlalchemy.sql import text, exists, select, update
 from sqlalchemy.sql.functions import func
 
@@ -768,9 +768,7 @@ def get_export_pdf_acquisition_frameworks(id_acquisition_framework, info_role):
     """
     # Verification des droits
     if info_role.value_filter == "0":
-        raise InsufficientRightsError(
-            ('User "{}" cannot "{}" a dataset').format(info_role.id_role, "export"), 403,
-        )
+        raise Forbidden(description='User "{}" cannot "{}" a dataset'.format(info_role.id_role, "export"))
 
     # Recuperation des données
     af = DB.session.query(TAcquisitionFrameworkDetails).get(id_acquisition_framework)
