@@ -144,7 +144,7 @@ class GeojsonReleveSchema(MA.Schema):
     # load_instance = True
 
     id = fields.Integer()
-    properties = fields.Nested(ReleveSchema(exclude=("geom_4326")))
+    properties = fields.Nested(ReleveSchema(exclude=("geom_4326",)))
     geometry = GeojsonSerializationField()
 
     @post_load

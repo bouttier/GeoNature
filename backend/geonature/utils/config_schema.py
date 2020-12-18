@@ -11,13 +11,16 @@ from marshmallow import (
     ValidationError,
     post_load,
 )
-from marshmallow.validate import OneOf, Regexp, Email
+from marshmallow.validate import OneOf, Regexp
 from geonature.core.gn_synthese.synthese_config import (
     DEFAULT_EXPORT_COLUMNS,
     DEFAULT_LIST_COLUMN,
     DEFAULT_COLUMNS_API_SYNTHESE,
 )
 from geonature.utils.env import GEONATURE_VERSION
+
+
+DEFAULT_ID_MUNICIPALITY = 25
 
 
 class CasUserSchemaConf(Schema):
@@ -27,21 +30,21 @@ class CasUserSchemaConf(Schema):
 
 
 class CasFrontend(Schema):
-    CAS_AUTHENTIFICATION = fields.Boolean(missing="false")
+    CAS_AUTHENTIFICATION = fields.Boolean(missing=False)
     CAS_URL_LOGIN = fields.Url(missing="https://preprod-inpn.mnhn.fr/auth/login")
     CAS_URL_LOGOUT = fields.Url(missing="https://preprod-inpn.mnhn.fr/auth/logout")
 
 
 class CasSchemaConf(Schema):
     CAS_URL_VALIDATION = fields.String(missing="https://preprod-inpn.mnhn.fr/auth/serviceValidate")
-    CAS_USER_WS = fields.Nested(CasUserSchemaConf, missing=dict())
+    CAS_USER_WS = fields.Nested(CasUserSchemaConf, missing=CasUserSchemaConf().load({}))
     USERS_CAN_SEE_ORGANISM_DATA = fields.Boolean(missing=False)
     # Quel modules seront associés au JDD récupérés depuis MTD
     JDD_MODULE_CODE_ASSOCIATION = fields.List(fields.String, missing=["OCCTAX", "OCCHAB"])
 
 
 class BddConfig(Schema):
-    id_area_type_municipality = fields.Integer(missing=25)
+    id_area_type_municipality = fields.Integer(missing=DEFAULT_ID_MUNICIPALITY)
     ID_USER_SOCLE_1 = fields.Integer(missing=8)
     ID_USER_SOCLE_2 = fields.Integer(missing=6)
 
@@ -117,8 +120,7 @@ class GnPySchemaConf(Schema):
         required=True,
         validate=Regexp(
             "^postgresql:\/\/.*:.*@[^:]+:\w+\/\w+$",
-            0,
-            "Database uri is invalid ex: postgresql://monuser:monpass@server:port/db_name",
+            error="Database uri is invalid ex: postgresql://monuser:monpass@server:port/db_name",
         ),
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = fields.Boolean(missing=True)
@@ -133,18 +135,18 @@ class GnPySchemaConf(Schema):
     BASE_DIR = fields.String(
         missing=os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
     )
-    CAS = fields.Nested(CasSchemaConf, missing=dict())
+    CAS = fields.Nested(CasSchemaConf, missing=CasSchemaConf().load({}))
     MAIL_ON_ERROR = fields.Boolean(missing=False)
     MAIL_CONFIG = fields.Nested(MailConfig, missing=None)
-    METADATA = fields.Nested(MetadataConfig, missing=dict())
+    METADATA = fields.Nested(MetadataConfig, missing=MetadataConfig().load({}))
     ADMIN_APPLICATION_LOGIN = fields.String()
-    ACCOUNT_MANAGEMENT = fields.Nested(AccountManagement, missing={})
-    USERSHUB = fields.Nested(UsersHubConfig, missing={})
-    SERVER = fields.Nested(ServerConfig, missing={})
-    MEDIAS = fields.Nested(MediasConfig, missing={})
+    ACCOUNT_MANAGEMENT = fields.Nested(AccountManagement, missing=AccountManagement().load({}))
+    USERSHUB = fields.Nested(UsersHubConfig, missing=UsersHubConfig().load({}))
+    SERVER = fields.Nested(ServerConfig, missing=ServerConfig().load({}))
+    MEDIAS = fields.Nested(MediasConfig, missing=MediasConfig().load({}))
 
     @post_load()
-    def unwrap_usershub(self, data):
+    def unwrap_usershub(self, data, **kwargs):
         """
             On met la section [USERSHUB] à la racine de la conf
             pour compatibilité et simplicité ave le sous-module d'authentif
@@ -155,7 +157,7 @@ class GnPySchemaConf(Schema):
         return data
 
     @validates_schema
-    def validate_enable_usershub_and_mail(self, data):
+    def validate_enable_usershub_and_mail(self, data, **kwargs):
         # si account management = true, URL_USERSHUB et MAIL_CONFIG sont necessaire
         if data["ACCOUNT_MANAGEMENT"].get("ENABLE_SIGN_UP", False) or data[
             "ACCOUNT_MANAGEMENT"
@@ -190,12 +192,9 @@ class GnFrontEndConf(Schema):
     DISPLAY_EMAIL_INFO_OBS = fields.Boolean(missing=True)
 
 
-id_municipality = BddConfig().load({}).data.get("id_area_type_municipality")
-
-
 class Synthese(Schema):
     AREA_FILTERS = fields.List(
-        fields.Dict, missing=[{"label": "Communes", "id_type": id_municipality}]
+        fields.Dict, missing=[{"label": "Communes", "id_type": DEFAULT_ID_MUNICIPALITY}]
     )
     # Listes des champs renvoyés par l'API synthese '/synthese'
     # Si on veut afficher des champs personnalisés dans le frontend (paramètre LIST_COLUMNS_FRONTEND) il faut
@@ -245,10 +244,6 @@ class Synthese(Schema):
     DISPLAY_EMAIL = fields.Boolean(missing=True)
 
 
-# On met la valeur par défaut de DISCONECT_AFTER_INACTIVITY inferieure à COOKIE_EXPIRATION
-cookie_expiration = GnPySchemaConf().load({}).data.get("COOKIE_EXPIRATION")
-
-
 # Map configuration
 BASEMAP = [
     {
@@ -290,27 +285,27 @@ class GnGeneralSchemaConf(Schema):
     URL_APPLICATION = fields.Url(required=True)
     API_ENDPOINT = fields.Url(required=True)
     API_TAXHUB = fields.Url(required=True)
-    LOCAL_SRID = fields.Integer(required=True, missing=2154)
+    LOCAL_SRID = fields.Integer(missing=2154)
     ID_APPLICATION_GEONATURE = fields.Integer(missing=3)
     XML_NAMESPACE = fields.String(missing="{http://inpn.mnhn.fr/mtd}")
     MTD_API_ENDPOINT = fields.Url(missing="https://preprod-inpn.mnhn.fr/mtd")
-    CAS_PUBLIC = fields.Nested(CasFrontend, missing=dict())
-    RIGHTS = fields.Nested(RightsSchemaConf, missing=dict())
-    FRONTEND = fields.Nested(GnFrontEndConf, missing=dict())
-    SYNTHESE = fields.Nested(Synthese, missing=dict())
-    MAPCONFIG = fields.Nested(MapConfig, missing=dict())
+    CAS_PUBLIC = fields.Nested(CasFrontend, missing=CasFrontend().load({}))
+    RIGHTS = fields.Nested(RightsSchemaConf, missing=RightsSchemaConf().load({}))
+    FRONTEND = fields.Nested(GnFrontEndConf, missing=GnFrontEndConf().load({}))
+    SYNTHESE = fields.Nested(Synthese, missing=Synthese().load({}))
+    MAPCONFIG = fields.Nested(MapConfig, missing=MapConfig().load({}))
     # Ajoute la surchouche 'taxonomique' sur l'API nomenclature
     ENABLE_NOMENCLATURE_TAXONOMIC_FILTERS = fields.Boolean(missing=True)
-    BDD = fields.Nested(BddConfig, missing=dict())
+    BDD = fields.Nested(BddConfig, missing=BddConfig().load({}))
     URL_USERSHUB = fields.Url(required=False)
-    ACCOUNT_MANAGEMENT = fields.Nested(AccountManagement, missing={})
-    MEDIAS = fields.Nested(MediasConfig, missing={})
+    ACCOUNT_MANAGEMENT = fields.Nested(AccountManagement, missing=AccountManagement().load({}))
+    MEDIAS = fields.Nested(MediasConfig, missing=MediasConfig().load({}))
     UPLOAD_FOLDER = fields.String(missing="static/medias")
-    METADATA = fields.Nested(MetadataConfig, missing={})
+    METADATA = fields.Nested(MetadataConfig, missing=MetadataConfig().load({}))
     NB_MAX_DATA_SENSITIVITY_REPORT = fields.Integer(missing=1000000)
 
     @validates_schema
-    def validate_enable_sign_up(self, data):
+    def validate_enable_sign_up(self, data, **kwargs):
         # si CAS_PUBLIC = true and ENABLE_SIGN_UP = true
         if data.get("CAS_PUBLIC").get("CAS_AUTHENTIFICATION") and (
             data["ACCOUNT_MANAGEMENT"].get("ENABLE_SIGN_UP", False)
@@ -322,7 +317,7 @@ class GnGeneralSchemaConf(Schema):
             )
 
     @validates_schema
-    def validate_account_autovalidation(self, data):
+    def validate_account_autovalidation(self, data, **kwargs):
         account_config = data.get("ACCOUNT_MANAGEMENT")
         if (
             not account_config.get("AUTO_ACCOUNT_CREATION", False)

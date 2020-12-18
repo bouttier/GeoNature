@@ -35,7 +35,7 @@ itsdangerous==0.24
 jinja2==2.10.1
 lxml==4.5.1
 markupsafe==1.1
-marshmallow==2.15.2
+marshmallow==3.9.1
 marshmallow-sqlalchemy==0.23.1
 packaging==16.8
 psycopg2==2.8.5
