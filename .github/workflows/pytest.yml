@@ -14,14 +14,25 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7"]
+        include:
+          - name: "Debian 10"
+            python-version: "3.7"
+            postgres-version: 11
+            postgis-version: 2.5
+          - name: "Debian 11"
+            python-version: "3.9"
+            postgres-version: 13
+            postgis-version: 3.2
+
+    name: ${{ matrix.name }}
 
     services:
       postgres:
-        image: postgis/postgis:11-2.5
+        image: postgis/postgis:${{ matrix.postgres-version }}-${{ matrix.postgis-version }}
         env:
           POSTGRES_DB: geonature2db
           POSTGRES_PASSWORD: geonatpasswd
@@ -43,8 +54,6 @@ jobs:
         psql -h localhost -U geonatadmin -d geonature2db -tc 'CREATE EXTENSION "unaccent";'
       env:
         PGPASSWORD: geonatpasswd
-    - name: Install postgis to provide raster2pgsql
-      run: sudo apt-get install -y postgis
     - uses: actions/checkout@v2
       with:
         submodules: recursive
