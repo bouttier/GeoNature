@@ -577,23 +577,24 @@ class TestGNMeta:
         with pytest.raises(KeyError):
             get_af_from_id(id_af=id_af, af_list=af_list)
 
-    def test__get_create_scope(self, users):
+    def test__get_create_scope(self, app, users):
 
         modcode = "METADATA"
         user = users["user"]
         noright = users["noright_user"]
         associate = users["associate_user"]
         admin = users["admin_user"]
-        set_logged_user_cookie(self.client, user)
 
-        create = TDatasets.query._get_create_scope(module_code=modcode, user=user)
+        with app.test_request_context(headers=logged_user_headers(user)):
+            app.preprocess_request()
+            create = TDatasets.query._get_create_scope(module_code=modcode)
+        usercreate = TDatasets.query._get_create_scope(module_code=modcode, user=user)
         norightcreate = TDatasets.query._get_create_scope(module_code=modcode, user=noright)
         associatecreate = TDatasets.query._get_create_scope(module_code=modcode, user=associate)
         admincreate = TDatasets.query._get_create_scope(module_code=modcode, user=admin)
 
-        assert isinstance(create, int)
-        assert isinstance(admincreate, int)
         assert create == 2
+        assert usercreate == 2
         assert norightcreate == 0
         assert associatecreate == 2
         assert admincreate == 3
