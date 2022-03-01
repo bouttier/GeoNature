@@ -94,7 +94,7 @@ jobs:
         ref: database
     - name: Dump database
       run: |
-        pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=ref_geo > ref_geo.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema=ref_geo --exclude-table-data="(dem*|l*)" > ref_geo.sql
         pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=ref_habitats > ref_habitats.sql
         pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=ref_nomenclatures > ref_nomenclatures.sql
         pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=taxonomie > taxonomie.sql
