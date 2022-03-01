@@ -75,9 +75,9 @@ jobs:
           -e file:backend/dependencies/Utils-Flask-SQLAlchemy-Geo#egg=utils-flask-sqlalchemy-geo
     - name: Install database
       run: |
-        #geonature db upgrade geonature@head -x local-srid=2154
+        geonature db upgrade geonature@head -x local-srid=2154
         #geonature db upgrade geonature@+1 -x local-srid=2154
-        geonature db upgrade ref_geo@head -x local-srid=2154
+        #geonature db upgrade ref_geo@head -x local-srid=2154
         #geonature db autoupgrade -x local-srid=2154
         #geonature db upgrade geonature-samples@head
         #geonature db upgrade taxonomie_taxons_example@head
@@ -94,7 +94,11 @@ jobs:
         ref: database
     - name: Dump database
       run: |
-        pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only > geonature.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=ref_geo > ref_geo.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=ref_habitats > ref_habitats.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=ref_nomenclatures > ref_nomenclatures.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=taxonomie > taxonomie.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db -exclude-schema=ref_geo --exclude-schema=ref_habitats --exclude-schema=ref_nomenclatures --exclude-schema=taxonomie > geonature.sql
       env:
         PGPASSWORD: geonatpasswd
       working-directory: database
@@ -102,8 +106,7 @@ jobs:
       run: |
         git config --local user.email "elie.bouttier@ecrins-parcnational.fr"
           git config --local user.name "Élie Bouttier"
-          git add geonature.sql
-          git commit -m "update"
+          git commit --all -m "update"
           git push
       working-directory: database
     #- name: Install core modules
