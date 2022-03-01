@@ -94,11 +94,11 @@ jobs:
         ref: database
     - name: Dump database
       run: |
-        pg_dump -h localhost -U geonatadmin -d geonature2db --schema=ref_geo --exclude-table-data="(dem*|l*)" > ref_geo.sql
-        pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=ref_habitats > ref_habitats.sql
-        pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=ref_nomenclatures > ref_nomenclatures.sql
-        pg_dump -h localhost -U geonatadmin -d geonature2db --schema-only --schema=taxonomie > taxonomie.sql
-        pg_dump -h localhost -U geonatadmin -d geonature2db -exclude-schema=ref_geo --exclude-schema=ref_habitats --exclude-schema=ref_nomenclatures --exclude-schema=taxonomie > geonature.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema=ref_geo --exclude-table-data="(dem*|l*)" --file=ref_geo.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema=ref_habitats --schema-only --file=ref_habitats.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema=ref_nomenclatures --exclude-table-data="(bib_*|cor_*|t_*)" --file=ref_nomenclatures.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema=taxonomie --exclude-table="(taxref*|bdc_statut*)" --file=taxonomie.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db -exclude-schema=ref_geo --exclude-schema=ref_habitats --exclude-schema=ref_nomenclatures --exclude-schema=taxonomie --file=geonature.sql
       env:
         PGPASSWORD: geonatpasswd
       working-directory: database
