@@ -5922,10 +5922,10 @@ COPY gn_commons.t_mobile_apps (id_mobile_app, app_code, relative_path_apk, url_a
 --
 
 COPY gn_commons.t_modules (id_module, module_code, module_label, module_picto, module_desc, module_group, module_path, module_external_url, module_target, module_comment, active_frontend, active_backend, module_doc_url, module_order, type, meta_create_date, meta_update_date) FROM stdin;
-0	GEONATURE	GeoNature		Module parent de tous les modules sur lequel on peut associer un CRUVED. NB: mettre active_frontend et active_backend à false pour qu'il ne s'affiche pas dans la barre latérale des modules	\N	/geonature	\N			f	f	http://docs.geonature.fr/user-manual.html	\N	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
-1	ADMIN	Admin	fa-cog	Backoffice de GeoNature	\N	admin	\N	_self	Administration des métadonnées et des nomenclatures	t	f	http://docs.geonature.fr/user-manual.html#admin	\N	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
-2	METADATA	Metadonnées	fa-book	Module de gestion des métadonnées	\N	metadata	\N	_self	\N	t	t	http://docs.geonature.fr/user-manual.html#metadonnees	\N	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
-3	SYNTHESE	Synthese	fa-search	Application synthese	\N	synthese	\N	_self	\N	t	t	http://docs.geonature.fr/user-manual.html#synthese	\N	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
+0	GEONATURE	GeoNature		Module parent de tous les modules sur lequel on peut associer un CRUVED. NB: mettre active_frontend et active_backend à false pour qu'il ne s'affiche pas dans la barre latérale des modules	\N	/geonature	\N			f	f	http://docs.geonature.fr/user-manual.html	\N	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
+1	ADMIN	Admin	fa-cog	Backoffice de GeoNature	\N	admin	\N	_self	Administration des métadonnées et des nomenclatures	t	f	http://docs.geonature.fr/user-manual.html#admin	\N	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
+2	METADATA	Metadonnées	fa-book	Module de gestion des métadonnées	\N	metadata	\N	_self	\N	t	t	http://docs.geonature.fr/user-manual.html#metadonnees	\N	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
+3	SYNTHESE	Synthese	fa-search	Application synthese	\N	synthese	\N	_self	\N	t	t	http://docs.geonature.fr/user-manual.html#synthese	\N	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
 \.
 
 
@@ -5934,10 +5934,10 @@ COPY gn_commons.t_modules (id_module, module_code, module_label, module_picto, m
 --
 
 COPY gn_commons.t_parameters (id_parameter, id_organism, parameter_name, parameter_desc, parameter_value, parameter_extra_value) FROM stdin;
-1	2	taxref_version	Version du référentiel taxonomique	Taxref V14.0	\N
-2	2	local_srid	Valeur du SRID local	2154	\N
-3	2	annee_ref_commune	Année du référentiel géographique des communes utilisé	2017	\N
-4	2	occtaxmobile_area_type	Type de zonage pour lequel la couleur des taxons est calculée pour Occtax-mobile	M5	\N
+1	1	taxref_version	Version du référentiel taxonomique	Taxref V14.0	\N
+2	1	local_srid	Valeur du SRID local	2154	\N
+3	1	annee_ref_commune	Année du référentiel géographique des communes utilisé	2017	\N
+4	1	occtaxmobile_area_type	Type de zonage pour lequel la couleur des taxons est calculée pour Occtax-mobile	M5	\N
 \.
 
 
@@ -6345,26 +6345,26 @@ COPY gn_synthese.cor_observer_synthese (id_synthese, id_role) FROM stdin;
 --
 
 COPY gn_synthese.defaults_nomenclatures_value (mnemonique_type, id_organism, regne, group2_inpn, id_nomenclature) FROM stdin;
-TYP_INF_GEO	2	0	0	123
-NAT_OBJ_GEO	2	0	0	170
-METH_OBS	2	0	0	58
-ETA_BIO	2	0	0	153
-STATUT_BIO	2	0	0	30
-NATURALITE	2	0	0	156
-PREUVE_EXIST	2	0	0	77
-STATUT_VALID	2	0	0	458
-STADE_VIE	2	0	0	1
-SEXE	2	0	0	168
-OBJ_DENBR	2	0	0	142
-TYP_DENBR	2	0	0	91
-STATUT_OBS	2	0	0	84
-DEE_FLOU	2	0	0	172
-TYP_GRP	2	0	0	129
-TECHNIQUE_OBS	2	0	0	314
-STATUT_SOURCE	2	0	0	72
-METH_DETERMIN	2	0	0	438
-OCC_COMPORTEMENT	2	0	0	544
-STAT_BIOGEO	2	0	0	176
+TYP_INF_GEO	1	0	0	123
+NAT_OBJ_GEO	1	0	0	170
+METH_OBS	1	0	0	58
+ETA_BIO	1	0	0	153
+STATUT_BIO	1	0	0	30
+NATURALITE	1	0	0	156
+PREUVE_EXIST	1	0	0	77
+STATUT_VALID	1	0	0	458
+STADE_VIE	1	0	0	1
+SEXE	1	0	0	168
+OBJ_DENBR	1	0	0	142
+TYP_DENBR	1	0	0	91
+STATUT_OBS	1	0	0	84
+DEE_FLOU	1	0	0	172
+TYP_GRP	1	0	0	129
+TECHNIQUE_OBS	1	0	0	314
+STATUT_SOURCE	1	0	0	72
+METH_DETERMIN	1	0	0	438
+OCC_COMPORTEMENT	1	0	0	544
+STAT_BIOGEO	1	0	0	176
 \.
 
 
@@ -6390,10 +6390,10 @@ COPY gn_synthese.t_sources (id_source, name_source, desc_source, entity_source_p
 
 COPY public.alembic_version (version_num) FROM stdin;
 1dbc45309d6e
-805442837a68
+4882d6141a41
 10e87bc144cd
 b820c66d8daa
-4882d6141a41
+805442837a68
 \.
 
 
@@ -6458,9 +6458,9 @@ COPY topology.layer (topology_id, layer_id, schema_name, table_name, feature_col
 --
 
 COPY utilisateurs.bib_organismes (id_organisme, uuid_organisme, nom_organisme, adresse_organisme, cp_organisme, ville_organisme, tel_organisme, fax_organisme, email_organisme, url_organisme, url_logo, id_parent, additional_data) FROM stdin;
--1	69502675-521e-49e1-a2e4-d226adcd14e6	Autre							\N	\N	\N	{}
-1	8c1b8d74-d544-4090-9b03-caa83b13eb7b	ma structure test	Rue des bois	00000	VILLE	00-00-99-00-99	\N	\N	\N	\N	\N	{}
-2	7d23a660-ab94-431d-b886-b84f51e01c8e	ALL	Représente tous les organismes	\N	\N	\N	\N	\N	\N	\N	\N	{}
+1	bfbfd1ac-f304-42a0-ac4e-aa5bc92c2c55	ALL	Représente tous les organismes	\N	\N	\N	\N	\N	\N	\N	\N	{}
+-1	df5cbb49-5f67-433a-9ecf-e429c80a6cde	Autre							\N	\N	\N	{}
+2	6bb9095a-c97c-4584-800b-0cb1e783cc1a	ma structure test	Rue des bois	00000	VILLE	00-00-99-00-99	\N	\N	\N	\N	\N	{}
 \.
 
 
@@ -6549,13 +6549,13 @@ COPY utilisateurs.t_profils (id_profil, code_profil, nom_profil, desc_profil) FR
 --
 
 COPY utilisateurs.t_roles (groupe, id_role, uuid_role, identifiant, nom_role, prenom_role, desc_role, pass, pass_plus, email, id_organisme, remarques, active, champs_addi, date_insert, date_update) FROM stdin;
-t	1	215b9748-0f70-4122-82c6-d94a3c0e4f8a	\N	Grp_en_poste	\N	Tous les agents en poste dans la structure	\N	\N	\N	\N	Groupe des agents de la structure avec droits d'écriture limité	t	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
-t	2	db7f1b29-bd36-4aef-8cb4-bb7c1547e069	\N	Grp_admin	\N	Tous les administrateurs	\N	\N	\N	\N	Groupe à droit total	t	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
-f	3	3a80560f-d8ec-4827-8cb1-7ff32c96328c	admin	Administrateur	test	\N	21232f297a57a5a743894a0e4a801fc3	$2y$13$TMuRXgvIg6/aAez0lXLLFu0lyPk4m8N55NDhvLoUHh/Ar3rFzjFT.	\N	-1	utilisateur test à modifier	t	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
-f	4	85dd680a-aa5a-4750-b155-8bf33bf7849e	agent	Agent	test	\N	b33aed8f3134996703dc39f9a7c95783	\N	\N	-1	utilisateur test à modifier ou supprimer	t	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
-f	5	f948f491-8c09-4379-aa26-61db427d4d92	partenaire	Partenaire	test	\N	5bd40a8524882d75f3083903f2c912fc	\N	\N	-1	utilisateur test à modifier ou supprimer	t	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
-f	6	67970559-a784-468c-8a21-2a5bfb3ce52a	pierre.paul	Paul	Pierre	\N	21232f297a57a5a743894a0e4a801fc3	\N	\N	-1	utilisateur test à modifier ou supprimer	t	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
-f	7	03555712-f0da-429d-90f0-44b8a144caa2	validateur	Validateur	test	\N	21232f297a57a5a743894a0e4a801fc3	\N	\N	-1	utilisateur test à modifier ou supprimer	t	\N	2022-03-01 23:54:40.43696	2022-03-01 23:54:40.43696
+t	1	bf5535f9-c7d5-4b0f-998a-b00c4a2cbc6e	\N	Grp_en_poste	\N	Tous les agents en poste dans la structure	\N	\N	\N	\N	Groupe des agents de la structure avec droits d'écriture limité	t	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
+t	2	75a16a6a-6c18-4945-bd1b-cc89a83c4d6d	\N	Grp_admin	\N	Tous les administrateurs	\N	\N	\N	\N	Groupe à droit total	t	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
+f	3	8ebe44f8-a236-4640-9700-504f4884fcb5	admin	Administrateur	test	\N	21232f297a57a5a743894a0e4a801fc3	$2y$13$TMuRXgvIg6/aAez0lXLLFu0lyPk4m8N55NDhvLoUHh/Ar3rFzjFT.	\N	-1	utilisateur test à modifier	t	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
+f	4	bee24062-56c8-4711-b66a-6749f867f2a3	agent	Agent	test	\N	b33aed8f3134996703dc39f9a7c95783	\N	\N	-1	utilisateur test à modifier ou supprimer	t	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
+f	5	6f6860f1-51d7-422b-a17c-c86171b7049c	partenaire	Partenaire	test	\N	5bd40a8524882d75f3083903f2c912fc	\N	\N	-1	utilisateur test à modifier ou supprimer	t	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
+f	6	106e0b94-02c0-4e85-b21c-16308d02d2fd	pierre.paul	Paul	Pierre	\N	21232f297a57a5a743894a0e4a801fc3	\N	\N	-1	utilisateur test à modifier ou supprimer	t	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
+f	7	68ff6427-9513-4b17-a1e5-c481cca7c3f0	validateur	Validateur	test	\N	21232f297a57a5a743894a0e4a801fc3	\N	\N	-1	utilisateur test à modifier ou supprimer	t	\N	2022-03-02 08:42:09.321235	2022-03-02 08:42:09.321235
 \.
 
 
