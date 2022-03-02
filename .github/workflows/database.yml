@@ -118,7 +118,7 @@ jobs:
       working-directory: database
     - name: Dump database
       run: |
-        pg_dump -h localhost -U geonatadmin -d geonature2db --schema=taxonomie --exclude-table="(taxref*|bdc_statut*)" --file=taxonomie.sql
+        pg_dump -h localhost -U geonatadmin -d geonature2db --schema=taxonomie --exclude-table-data="(taxref*|bdc_statut*)" --file=taxonomie.sql
       env:
         PGPASSWORD: geonatpasswd
       working-directory: database
