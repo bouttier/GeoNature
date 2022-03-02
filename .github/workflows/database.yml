@@ -126,7 +126,8 @@ jobs:
       run: |
         git config --local user.email "elie.bouttier@ecrins-parcnational.fr"
         git config --local user.name "Élie Bouttier"
-        git commit --all -m "update"
+        git add .
+        git commit -m "update"
         git push
       working-directory: database
     #- name: Install core modules
