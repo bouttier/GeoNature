@@ -77,7 +77,7 @@
     "node-forge": "^0.10.0",
     "package-json-path": "1.0.8",
     "popper.js": "^1.15.0",
-    "primeng": "^13.0.0",
+    "primeng": "^14.0.2",
     "rxjs": "~6.6.3",
     "rxjs-compat": "^6.6.3",
     "select2": "^4.0.5",
