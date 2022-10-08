@@ -24,7 +24,7 @@ setuptools.setup(
         "": "backend",
     },
     package_data={
-        "geonature": ["**/templates/**/*.html"],
+        "geonature": ["*.toml", "**/templates/**/*.html"],
         "geonature.tests": ["data/*.sql"],
         "geonature.migrations": ["alembic.ini", "script.py.mako", "data/**/*.sql"],
     },
