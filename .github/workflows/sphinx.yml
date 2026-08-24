@@ -5,6 +5,12 @@ on:
     branches:
       - master
       - develop
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - docs/**
+      - .github/workflows/sphinx.yml
 
 jobs:
   docs:
@@ -29,10 +35,9 @@ jobs:
         id: deployment
         with:
           requirements_path: docs/requirements.txt
+          pyproject_extras: ""
           python_version: 3.11
           publish: false
-        env:
-          GEONATURE_CONFIG_FILE: config/test_config.toml
 
       - name: Push changes
         if: github.ref == 'refs/heads/master'
