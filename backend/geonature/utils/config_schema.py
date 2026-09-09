@@ -555,15 +555,15 @@ class MapConfig(Schema):
             },
             {
                 "code": "znieff1",
-                "label": "ZNIEFF1 (INPN)",
+                "label": "ZNIEFF1 (IGN)",
                 "type": "wms",
-                "url": "https://ws.carmencarto.fr/WMS/119/fxx_inpn",
+                "url": "https://data.geopf.fr/wms-v/ows",
                 "activate": False,
                 "params": {
                     "service": "wms",
                     "version": "1.3.0",
                     "request": "GetMap",
-                    "layers": "znieff1",
+                    "layers": "Patrinat_ZNIEFF1_France",
                     "format": "image/png",
                     "crs": "EPSG:4326",
                     "opacity": 0.2,
