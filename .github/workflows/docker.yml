@@ -26,44 +26,24 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Generate metadata for wheels image
-        id: meta-wheels
-        uses: docker/metadata-action@v4
-        with:
-          images: ghcr.io/${{ github.repository_owner }}/geonature-backend
-          flavor: |
-            suffix=-wheels
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
-      - name: Build and export wheels image
-        id: build-wheels
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./backend/Dockerfile
-          target: wheels
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta-wheels.outputs.tags }}
-          labels: ${{ steps.meta-wheels.outputs.labels }}
-      - name: Generate metadata for prod image
-        id: meta-prod
+      - name: Generate metadata
+        id: meta
         uses: docker/metadata-action@v4
         with:
           images: ghcr.io/${{ github.repository_owner }}/geonature-backend
           tags: |
             type=ref,event=branch
             type=ref,event=tag
-      - name: Build and export prod image
-        id: build-prod
+      - name: Build and export
+        id: build
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./backend/Dockerfile
           target: prod
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta-prod.outputs.tags }}
-          labels: ${{ steps.meta-prod.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
   build-frontend:
     name: Build frontend image
