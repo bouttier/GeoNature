@@ -183,7 +183,6 @@ FROM wheels-light AS prod-light
 WORKDIR /dist/geonature
 RUN --mount=type=cache,target=/root/.cache \
     uv pip install --system *.whl
-RUN rm -f *.whl
 
 
 FROM wheels AS prod
@@ -192,4 +191,3 @@ WORKDIR /dist/geonature
 RUN --mount=type=cache,target=/root/.cache \
     uv pip install --system *.whl
 RUN pip uninstall -y uv
-RUN rm -f *.whl
