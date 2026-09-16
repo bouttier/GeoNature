@@ -9,6 +9,8 @@
 set -o errexit
 set -o pipefail
 
+rm -f /tmp/ready
+
 # Took from https://github.com/docker-library/postgres/blob/master/19/alpine3.24/docker-entrypoint.sh
 # usage: file_env VAR
 #    ie: file_env 'XYZ_DB_PASSWORD'
@@ -52,5 +54,7 @@ else
         geonature permissions supergrant --yes ${GEONATURE_SUPERGRANT_ARGS}
     fi
 fi
+
+touch /tmp/ready
 
 exec "$@"
