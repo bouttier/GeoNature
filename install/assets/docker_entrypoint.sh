@@ -49,6 +49,10 @@ else
     fi
 
     geonature upgrade-modules-db
+
+    if [ -n "${GEONATURE_SUPERGRANT_ARGS:-}" ]; then
+        geonature permissions supergrant --yes ${GEONATURE_SUPERGRANT_ARGS}
+    fi
 fi
 
 exec "$@"
