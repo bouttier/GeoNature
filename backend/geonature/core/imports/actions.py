@@ -1,6 +1,5 @@
 from geonature.core.imports.models import BibFields, Entity, TImports
 
-from bokeh.embed.standalone import StandaloneEmbedJson
 from geonature.utils.config import config
 from geonature.utils.env import db
 from pypnusershub.db.models import User
@@ -194,7 +193,7 @@ class ImportActions:
             )
 
     @staticmethod
-    def report_plot(imprt: TImports) -> StandaloneEmbedJson:
+    def report_plot(imprt: TImports):
         """
         Generate the report plot for the given import. The plot must be realized using the Bokeh library.
         Plot must be return as JSON using the Bokeh `json_item` function.
