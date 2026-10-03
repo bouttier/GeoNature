@@ -14,13 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           submodules: True
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v4
       - name: Login to GHCR
-        uses: docker/login-action@v2
+        uses: docker/login-action@v4
         if: github.event_name != 'pull_request'
         with:
           registry: ghcr.io
@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Generate metadata for wheels image
         id: meta-wheels
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository_owner }}/geonature-backend
           flavor: |
@@ -38,7 +38,7 @@ jobs:
             type=ref,event=tag
       - name: Build and export wheels image
         id: build-wheels
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./backend/Dockerfile
@@ -48,7 +48,7 @@ jobs:
           labels: ${{ steps.meta-wheels.outputs.labels }}
       - name: Generate metadata for prod image
         id: meta-prod
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository_owner }}/geonature-backend
           tags: |
@@ -56,7 +56,7 @@ jobs:
             type=ref,event=tag
       - name: Build and export prod image
         id: build-prod
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./backend/Dockerfile
@@ -70,13 +70,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           submodules: True
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v4
       - name: Login to GHCR
-        uses: docker/login-action@v2
+        uses: docker/login-action@v4
         if: github.event_name != 'pull_request'
         with:
           registry: ghcr.io
@@ -84,7 +84,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Generate metadata for source image
         id: meta-source
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository_owner }}/geonature-frontend
           flavor: |
@@ -93,7 +93,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
       - name: Build and export source image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./frontend/Dockerfile
@@ -103,7 +103,7 @@ jobs:
           labels: ${{ steps.meta-source.outputs.labels }}
       - name: Generate metadata for nginx image
         id: meta-nginx
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository_owner }}/geonature-frontend
           flavor: |
@@ -112,7 +112,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
       - name: Build and export nginx image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./frontend/Dockerfile
@@ -122,14 +122,14 @@ jobs:
           labels: ${{ steps.meta-nginx.outputs.labels }}
       - name: Generate metadata for prod image
         id: meta-prod
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository_owner }}/geonature-frontend
           tags: |
             type=ref,event=branch
             type=ref,event=tag
       - name: Build and export prod image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./frontend/Dockerfile
